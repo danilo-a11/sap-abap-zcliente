@@ -1,0 +1,31 @@
+REPORT zcliente.
+
+TABLES: zcliente.
+
+PARAMETERS: p_id     TYPE zcliente-id_cliente,
+            p_nome   TYPE zcliente-nome,
+            p_email  TYPE zcliente-email,
+            p_cidade TYPE zcliente-cidade.
+
+START-OF-SELECTION.
+
+  PERFORM inserir_cliente.
+
+FORM inserir_cliente.
+
+  DATA: ls_cliente TYPE zcliente.
+
+  ls_cliente-id_cliente = p_id.
+  ls_cliente-nome       = p_nome.
+  ls_cliente-email      = p_email.
+  ls_cliente-cidade     = p_cidade.
+
+  INSERT zcliente FROM ls_cliente.
+
+  IF sy-subrc = 0.
+    MESSAGE 'Cliente inserido com sucesso' TYPE 'S'.
+  ELSE.
+    MESSAGE 'Erro ao inserir cliente' TYPE 'E'.
+  ENDIF.
+
+ENDFORM.
