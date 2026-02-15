@@ -1,0 +1,21 @@
+REPORT zrelatorio_alv.
+
+TABLES: zvendas.
+
+PARAMETERS: p_data_ini TYPE sy-datum,
+            p_data_fim TYPE sy-datum.
+
+DATA: it_vendas TYPE STANDARD TABLE OF zvendas,
+      wa_vendas TYPE zvendas.
+
+START-OF-SELECTION.
+
+  SELECT * FROM zvendas
+    INTO TABLE it_vendas
+    WHERE data BETWEEN p_data_ini AND p_data_fim.
+
+  CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
+    EXPORTING
+      i_structure_name = 'ZVENDAS'
+    TABLES
+      t_outtab         = it_vendas.
